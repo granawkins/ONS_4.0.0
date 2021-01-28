@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<head>
+    <title>O'Neill Sim v4.0</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;900&display=swap">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body id="root">
+    <div id="header">
+        <div id="controller">
+            <button id="playButton">Play</button>
+            <p>Speed:</p>
+            <button id="speed1">1</button>
+            <button id="speed2">2</button>
+            <button id="speed3">3</button>
+        </div>
+        <h2 id="dateCounter">Jan 01, 1970 00:00</h2>
+        <h2 id="peopleCounter">300 People</h2>
+    </div>
+    <div id="app">
+        <div id="basesContainer" class="column">
+
+            <!-- LAGRANGIAN POINT L2 -->
+            <div id="L2" class="craft base" style="display: none;">
+                <h1>L2 Station</h1>
+            </div>
+
+            <!-- LUNAR SURFACE -->
+            <div id="LS" class="craft base" style="display: none;">
+                <h1>Lunar Surface</h1>
+            </div>
+
+            <!-- LUNAR PARKING ORBIT -->
+            <div id="LPO" class="craft base" style="display: none;">
+                <h1>Lunar Orbit</h1>
+            </div>
+            
+            <!-- GEOSTATIONARY ORBIT -->
+            <div id="GSO" class="craft base" style="display: none;">
+                <h1>Geostationary Orbit</h1>
+            </div>
+
+            <!-- LAGRANGIAN POINT L5 -->
+            <div id="L5" class="craft base" style="display: none;">
+                <h1>Colony at L5</h1>
+            </div>
+
+            <!-- LOW EARTH ORBIT -->
+            <div id="LEO" class="craft base" style="display: none;">
+                <h1>Low Earth Orbit</h1>
+                <div class="section" id="LEOCrew"></div>
+                <div class="section" id="LEOProjects"></div>
+                <div class="section" id="LEODock"></div>
+                <div class="section" id="LEOLifeSupport"></div>
+                <div class="section" id="LEOCargo"></div>
+                <div class="section" id="LEOEconomy"></div>
+            </div>
+
+            <!-- CAPE CANAVERAL, FL -->
+            <div id="CAPE" class="craft base" style="display: none;">
+                <h1>Cape Canaveral, FL</h1>
+                <div class="section" id="CAPEProjects"></div>                
+                <div class="section" id="CAPEFields"></div>
+                <div class="section" id="CAPECargo"></div>
+                <div class="section" id="CAPEDock"></div>
+            </div>
+        </div>
+
+        <div id="shipsContainer" class="column">
+            <div id="SS1" class="craft ship" style="display: none;">
+                <h1>Space Shuttle 1</h1>
+                <div class="section" id="SS1Crew"></div>
+                <div class="section" id="SS1LifeSupport"></div>
+                <div class="section" id="SS1Cargo"></div>
+                <div class="section" id="SS1Dock"></div>
+                <div class="section" id="SS1Navigation"></div>
+            </div>
+            <div id="HLLV1" class="craft ship" style="display: none;">
+                <h1>Heavy Lift 1</h1>
+                <div class="section" id="HLLV1Crew"></div>
+                <div class="section" id="HLLV1LifeSupport"></div>
+                <div class="section" id="HLLV1Cargo"></div>
+                <div class="section" id="HLLV1Dock"></div>
+                <div class="section" id="HLLV1Navigation"></div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="./src/main.js" type="module"></script>
+</body>

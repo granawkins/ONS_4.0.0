@@ -1,0 +1,22 @@
+{
+  "name": "ons_3.0.3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/granawkins/ONS_3.0.2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/granawkins/ONS_3.0.2/issues"
+  },
+  "homepage": "https://github.com/granawkins/ONS_3.0.2#readme",
+  "dependencies": {
+    "chart.js": "^2.9.4"
+  }
+}
