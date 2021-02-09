@@ -26,14 +26,34 @@ p {
     margin: 0px;
 }
 
+#welcome {
+  border: 1px solid black;
+  height: auto;
+  width: 300px;
+  position: fixed;
+  text-align: left;
+  padding: 15px;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  transition: margin-top 0.5s ease;
+}
+
 #header {
+    position: sticky;
+    top: 10px;
+    width: 100%;
     font-size: 1em;
-    display: flex;
-    height: 50px;
+    display: none;
+    /* height: 50px; */
     border: 1px solid black;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    margin: 0;
+    z-index: 1000000;
+    background-color: white;
+    /* box-sizing: border-box; */
   }
   
 #controller {
@@ -47,6 +67,27 @@ p {
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+#printArea {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  align-content: right;
+  width: 100%;
+  top: 60px;
+  margin: 0;
+  padding: 0;
+}
+
+.print {
+    top: 10px;
+    width: auto;
+    right: 0;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px 0 0 0;
+    background-color: white;
 }
 
 .column {
@@ -73,6 +114,7 @@ p {
     position: absolute;
     text-align: center;
     background-color: white;
+    transition: left 1s;
 }
 
 .base {
@@ -175,6 +217,17 @@ p {
     height: auto;
     padding: 3px;
     border: 1px solid black;
+}
+
+.dockButtonWrapper {
+  background-color: lightpink;
+  height: auto;
+  padding: 2px;
+}
+
+.dockButtonWrapper button{
+  margin: 0px 2px;
+  vertical-align: center;
 }
 
 /* Range Slider */

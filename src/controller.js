@@ -1,15 +1,13 @@
-var dateCounter
-
 export default class Controller {
   constructor(playPause, gameSpeed) {
-    dateCounter = document.getElementById("dateCounter")
+
+    this.dateCounter = document.getElementById("dateCounter")
+    this.peopleCounter = document.getElementById("peopleCounter")
+    this.playButton = document.getElementById("playButton")
     
-    const playButton = document.getElementById("playButton")
-    
-    playButton.addEventListener("click", event => {
-      let newButtonText = (playButton.innerHTML === "Play") ? "Pause" : "Play"
-      playButton.innerHTML = ""
-      playButton.innerHTML = newButtonText
+    this.playButton.addEventListener("click", event => {
+      let newButtonText = (this.playButton.innerHTML === "Play") ? "Pause" : "Play"
+      this.playButton.innerHTML = newButtonText
       playPause()
     })
     
@@ -19,9 +17,10 @@ export default class Controller {
     
   }
   
-  render(gameDate) {
-    dateCounter.innerHTML = ""
-    dateCounter.innerHTML = renderDate(gameDate)
+  render(gameDate, people) {
+    this.dateCounter.innerHTML = renderDate(gameDate)
+
+    this.peopleCounter.innerHTML = people
   }
 
   display(message) {

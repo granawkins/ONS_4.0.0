@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body id="root">
+    <div id="welcome"></div>
     <div id="header">
         <div id="controller">
-            <button id="playButton">Play</button>
+            <button id="playButton">Pause</button>
             <p>Speed:</p>
             <button id="speed1">1</button>
             <button id="speed2">2</button>
             <button id="speed3">3</button>
         </div>
         <h2 id="dateCounter">Jan 01, 1970 00:00</h2>
-        <h2 id="peopleCounter">300 People</h2>
+        <h2 id="peopleCounter">0 People</h2>
     </div>
+    <div id="printArea"></div>
     <div id="app">
         <div id="basesContainer" class="column">
 
@@ -53,10 +55,10 @@
                 <h1>Low Earth Orbit</h1>
                 <div class="section" id="LEOCrew"></div>
                 <div class="section" id="LEOProjects"></div>
-                <div class="section" id="LEODock"></div>
                 <div class="section" id="LEOLifeSupport"></div>
                 <div class="section" id="LEOCargo"></div>
                 <div class="section" id="LEOEconomy"></div>
+                <div class="section" id="LEODock"></div>
             </div>
 
             <!-- CAPE CANAVERAL, FL -->
@@ -71,19 +73,18 @@
 
         <div id="shipsContainer" class="column">
             <div id="SS1" class="craft ship" style="display: none;">
-                <h1>Space Shuttle 1</h1>
+                <h1 id="SS1Header">Space Shuttle 1</h1>
+                <div class="section" id="SS1Dock"></div>
                 <div class="section" id="SS1Crew"></div>
                 <div class="section" id="SS1LifeSupport"></div>
                 <div class="section" id="SS1Cargo"></div>
-                <div class="section" id="SS1Dock"></div>
                 <div class="section" id="SS1Navigation"></div>
             </div>
             <div id="HLLV1" class="craft ship" style="display: none;">
-                <h1>Heavy Lift 1</h1>
-                <div class="section" id="HLLV1Crew"></div>
-                <div class="section" id="HLLV1LifeSupport"></div>
-                <div class="section" id="HLLV1Cargo"></div>
+                <h1 id="HLLV1Header">Heavy Lift 1</h1>
                 <div class="section" id="HLLV1Dock"></div>
+                <div class="section" id="HLLV1Crew"></div>
+                <div class="section" id="HLLV1Cargo"></div>
                 <div class="section" id="HLLV1Navigation"></div>
             </div>
         </div>

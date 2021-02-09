@@ -1,12 +1,13 @@
 export const bases = {
     CAPE: {
         label: "Cape Canaveral, FL",
-        procsIndex: ['human', 'wrs',],
+        procsIndex: ['human'],
         // procsQty: [Infinity],
-        sinksIndex: ["waPot", "hF", "LO2", "LH2", "MMH", "N2O4", "O2Tank"],
+        sinksIndex: ["waPot", "hF", "LO2", "LH2", "MMH", "N2O4"],
         // sinksBal: [Infinity],
         flags: {
             renderDock: true,
+            renderPropellant: true,
         },
     },
     LEO: {
@@ -15,7 +16,7 @@ export const bases = {
         capacity: 200,
         sinksIndex: [],
         sinksBal: [],
-        projects: ["unlockO2Tank"],
+        projects: ['unlockO2Tank'],
         flags: {
             renderCrew: true,
             renderDock: true,

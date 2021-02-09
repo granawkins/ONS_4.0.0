@@ -1,6 +1,6 @@
 const LIFE_SUPPORT_UNITS = 1e5
-const TANK_UNITS = 1e4
-const CARGO_UNITS = 1e4
+const TANK_UNITS = 1e5
+const CARGO_UNITS = 1e5
 const BUILDING_UNITS = 1e7
 
 export const sinks = {

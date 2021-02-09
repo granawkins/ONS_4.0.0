@@ -9,7 +9,7 @@ export const projects = {
             cape.flags.refreshCape = true
 
             let newProjects = craft.projects.slice()
-            newProjects.push("unlockFuelCell")
+            if (!newProjects.includes("unlockFuellFell")) newProjects.push("unlockFuelCell")
             craft.projects = newProjects
         },
     },
@@ -24,7 +24,9 @@ export const projects = {
             cape.flags.refreshCape = true
 
             let newProjects = craft.projects.slice()
-            newProjects = newProjects.concat(["unlockOgs", "unlockWrs", "unlockScrub"])
+            if (!newProjects.includes("unlockOgs")) newProjects.push("unlockOgs")
+            if (!newProjects.includes("unlockWrs")) newProjects.push("unlockWrs")
+            if (!newProjects.includes("unlockScrub")) newProjects.push("unlockScrub")
             craft.projects = newProjects
         },
     },
@@ -37,7 +39,7 @@ export const projects = {
             cape.set("ogs")         
             cape.flags.refreshCape = true
 
-            if (!cape.sinksIndex.includes('habComp') && !craft.projcs.includes('unlockHabComp')) {
+            if (!cape.sinksIndex.includes('habComp') && !craft.projects.includes('unlockHabComp')) {
                 let newProjects = craft.projects.slice()
                 newProjects.push("unlockHabComp")
                 craft.projects = newProjects
@@ -69,7 +71,7 @@ export const projects = {
             cape.set("scrub")         
             cape.flags.refreshCape = true
 
-            if (!cape.sinksIndex.includes('habComp') && !craft.projcs.includes('unlockHabComp')) {
+            if (!cape.sinksIndex.includes('habComp') && !craft.projects.includes('unlockHabComp')) {
                 let newProjects = craft.projects.slice()
                 newProjects.push("unlockHabComp")
                 craft.projects = newProjects
@@ -88,7 +90,7 @@ export const projects = {
             craft.game.addCraft("HLLV1")
 
             let newProjects = craft.projects.slice()
-            newProjects.push("setupLEOHab")
+            if (!newProjects.includes("setupLEOHab")) newProjects.push("setupLEOHab")
             craft.projects = newProjects
         },
     },

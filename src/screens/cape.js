@@ -13,15 +13,20 @@ export const MASS_UNITS = [
 
 export default function renderCape(craft) {
 
+    if (!craft.memory.cape) craft.memory.cape = {}
+    let memory = craft.memory.cape
+
     // Get list
     // Render available fields in order
 
-    if (!craft.flags.capeInitialized || craft.flags.refreshCape ) {
+    if (!craft.flags.capeInitialized || craft.flags.refreshCape || 
+        craft.dockedWith !== memory.dockedWith) {
 
         $(`#CAPEFields`).empty()
         craft.memory.fields = {
             buttons: [],
-            dockedWith: "none",
+            dockedWith: null,
+            airlockedWith: null,
         }
 
         const addField = (field, units, container=$(`#CAPEFields`)) => {
@@ -72,45 +77,40 @@ export default function renderCape(craft) {
                 addField(sink, MASS_UNITS.slice(1, 2))
             }
         })
-
-        renderCargo(craft)
-
-        // data.sinksOfType("cargo").forEach(sink => {
-        //     if (craft.sinksIndex.includes(sink)) {
-        //         addField(sink, MASS_UNITS.slice(1, 2))
-        //     }
-        // })
-        // data.sinksOfType("building").forEach(sink => {
-        //     if (craft.sinksIndex.includes(sink)) {
-        //         addField(sink, MASS_UNITS.slice(3))
-        //     }
-        // })
-
-        // Propellant
-        data.sinksOfType("propellant").forEach(sink => {
+        data.sinksOfType("building").forEach(sink => {
             if (craft.sinksIndex.includes(sink)) {
-                addField(sink, MASS_UNITS.slice(2), $(`#${craft.name}PropellantDepotMenu`))
+                addField(sink, MASS_UNITS.slice(3,5))
             }
         })
+
+
+        renderCargo(craft)
         
         craft.flags.capeInitialized = true;
         craft.flags.refreshCape = false;
+        memory.dockedWith = craft.dockedWith
     }
 
-    // Toggle buttons on and off
-    let dockedWith = (craft.dockedWith) ? craft.dockedWith : "none"
-    if (dockedWith !== craft.memory.fields.dockedWith) {
-        if (dockedWith === "none") {
-            craft.memory.fields.buttons.forEach(button => {
-                $(`#${button.bId}`).css('display', "none").off()
-            })
-        } else {
-            craft.memory.fields.buttons.forEach(button => {
-                $(`#${button.bId}`).css("display", "inline").click(() => {
-                    craft.game.transfer(craft.name, dockedWith, button.field, button.increment)
+    // Compile 'active buttons' list
+    let airlockFields = ['human']
+
+    if (craft.dockedWith !== craft.memory.fields.dockedWith ||
+        craft.airlockedWith !== craft.memory.fields.airlockedWith) 
+    {
+        craft.memory.fields.buttons.forEach(button => {
+            let b = $(`#${button.bId}`).off()
+            let connected = (airlockFields.includes(button.field)) 
+                ? craft.airlockedWith 
+                : craft.dockedWith
+            if (connected) {
+                b.css("display", "inline").click(() => {
+                    craft.game.transfer(craft.name, connected, button.field, button.increment)
                 })
-            })
-        }
-        craft.memory.fields.dockedWith = dockedWith
+            }
+        })
+        craft.memory.fields.dockedWith = craft.dockedWith
+        craft.memory.fields.airlockedWith = craft.airlockedWith
+
     }
+
 }

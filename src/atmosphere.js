@@ -38,7 +38,6 @@ export const renderAtmosphere = (craft, container, units="mass") => {
     let atmosphere = atmosphereFields(craft)
     let pressures
     if (units === 'pressure') pressures = calculateAtmosphere(atmosphere, craft.volume).pressure
-    console.log(pressures)
     Object.keys(atmosphere).forEach(field => {
       switch(units) {
         case 'mass' : balance.push(craft.field(field)); break;

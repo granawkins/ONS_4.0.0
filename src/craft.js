@@ -12,6 +12,7 @@ import renderCrew from "./screens/crew.js"
 import renderLifeSupport from "./screens/lifeSupport.js"
 import renderCargo from "./screens/cargo.js"
 import { getEta, renderNavigation } from "./screens/navigation.js"
+import renderPropellant from "./screens/propellant.js"
 
 export default class Craft {
     constructor(name, game) {
@@ -45,6 +46,7 @@ export default class Craft {
         this.projects = (this.data.projects) ? this.data.projects : []
         this.flags = (this.data.flags) ? this.data.flags : []
         this.dockedWith = null
+        this.airlockedWith = null
         this.memory = {
             sparklines: {},
             dockableFields: {},
@@ -62,7 +64,6 @@ export default class Craft {
         // Initialize
         if (!this.flags.initialized) {
             if (this.type === "ship") this.arrive("CAPE")
-            console.log('initializing ' + this.name)
             this.flags.refreshFlows = true
             this.flags.initialized = true
         }
@@ -101,13 +102,14 @@ export default class Craft {
             this.memory.hour = hour
         }
 
-        if (this.type === "base" && this.flags.renderDock) renderDock(this)
+        if (this.type === 'ship') renderDock(this)
         if (this.flags.renderProjects) renderProjects(this)
         if (this.name === "CAPE") renderCape(this)
         if (this.flags.renderCrew) renderCrew(this)
         if (this.flags.renderLifeSupport) renderLifeSupport(this)
         if (this.flags.renderCargo) renderCargo(this)
         if (this.flags.renderNavigation) renderNavigation(this)
+        if (this.type === 'base' && this.flags.renderPropellant) renderPropellant(this)
     }
 
     field(field) {
@@ -186,7 +188,6 @@ export default class Craft {
                 }
                 case "ogs" : {
                     this.flags.renderOgs = true;
-                    this.game.alert(this.name + "Atmosphere")
                     break;
                 }
                 case "wrs" : {
@@ -196,7 +197,6 @@ export default class Craft {
                 case "fuelCell" : {
                     this.flags.renderElec = true;
                     this.flags.renderFuelCell = true;
-                    this.game.alert(this.name + "Elec")
                     break;
                 }
                 case "scrub" : {
@@ -209,7 +209,10 @@ export default class Craft {
             switch(data.data(field).type) {
                 case "lifeSupport" : this.flags.refreshLifeSupport = true; break;
                 case "cargo" : this.flags.refreshCargo = true; break;
-                case "propellant" : addPayload = false; break;
+                case "propellant" : {
+                    this.flags.renderPropellant = true
+                    addPayload = false; break;
+                }
                 case "electricity" : addPayload = false; this.flags.elec = true; break;
             }
         }
@@ -267,10 +270,15 @@ export default class Craft {
         this.location = null
         this.flags.refreshNavigation = true
     
-        origin = this.game.bases[origin]
-        origin.ships.splice(origin.ships.indexOf(this.name), 1)
-        origin.flags.refreshDock = true
-        origin.updateLaborForce()
+        // Reset origin's ship object
+        let base = this.game.bases[origin]
+        let newShips = base.ships.filter(s => s !== this.name)
+        base.ships = newShips
+        if (origin !== "CAPE") base.updateLaborForce()
+
+        if (origin === "CAPE" && this.field('human')) {
+            this.game.settlers = this.game.settlers + this.field('human')
+        }
     }
       
     arrive = (destination) => {
@@ -280,22 +288,24 @@ export default class Craft {
         let newBase = this.game.bases[this.location]
         newBase.ships.push(this.name)
         newBase.flags.refreshDock = true
-        newBase.updateLaborForce()
+        if (destination !== "CAPE") newBase.updateLaborForce()
 
-        if (destination === "CAPE" && this.flags.renderLifeSupport) {
-            this.game.balanceAtmospheres("CAPE", this.name)
+        if (destination === "CAPE") {
+            if (this.flags.renderLifeSupport) {
+                this.game.balanceAtmospheres("CAPE", this.name)
+            }
+            if (this.field("human")) {
+                this.game.settlers = this.game.settlers - this.field("human")
+            }
         }
     
         // Position ship(s) next to base
         let base = document.getElementById(this.location)
         let ship = document.getElementById(this.name)
         ship.style.top = base.offsetTop + "px"
-        let otherShips = newBase.ships.length - 1
-        if (otherShips) {
-            ship.style.left = otherShips * 100 + "px"
-        }
 
         this.flags.refreshNavigation = true
+        
     }
     
     unloadAll = () => {
@@ -391,7 +401,7 @@ export default class Craft {
                 amount = Math.min(amount, base.field(field))
             }
 
-            console.log(`transferring ${amount} ${field} from ${this.dockedWith} to ${this.name}`)
+            // console.log(`transferring ${amount} ${field} from ${this.dockedWith} to ${this.name}`)
             this.game.transfer(this.dockedWith, this.name, field, amount)
         })
     }

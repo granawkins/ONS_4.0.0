@@ -1,5 +1,6 @@
 import Controller from "./controller.js"
 import Game from "./game.js"
+import welcome from "./welcome.js"
 
 $(function() {
     var dps = 0.042 // DAYS PER SECOND
@@ -8,8 +9,16 @@ $(function() {
     var paused = true
     var timerID
     var game
+    var mode
+    var initialized = false
 
-    const playPause = () => {
+    const playPause = (m) => {
+    if (!initialized) {
+        $(`#header`).css("display", "flex")
+        mode = m
+        game = new Game(mode)
+        initialized = true
+    }
     if (paused) {
         timerID = setInterval(() => {
         const currentTime = new Date().getTime();
@@ -23,7 +32,7 @@ $(function() {
             clearInterval()
         } else {
             game.step(dT)
-            controller.render(game.date)
+            controller.render(game.date, game.settlers)
         }
         }, 1000/fps);
     } else {
@@ -40,5 +49,5 @@ $(function() {
 
     const controller = new Controller(playPause, gameSpeed)
 
-    game = new Game()
+    welcome(playPause)
 });
